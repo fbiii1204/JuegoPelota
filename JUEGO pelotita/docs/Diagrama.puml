@@ -1,0 +1,64 @@
+@startuml DiagramaUML_PelotaRebota
+
+skinparam class {
+    BackgroundColor #F8F8F8
+    BorderColor #333333
+    ArrowColor #333333
+    FontSize 13
+    FontName Arial
+}
+
+' ---------------------------
+' CLASES PRINCIPALES
+' ---------------------------
+
+class JuegoPrincipal {
+  +iniciar()
+  +actualizar()
+  +renderizar()
+  -procesarEventos()
+  -manejarColisiones()
+}
+
+class Jugador {
+  +mover()
+  +dibujar()
+  +obtenerHitbox()
+}
+
+class Pelota {
+  +actualizarPosicion()
+  +dibujar()
+  +manejarRebotes()
+}
+
+class Bloque {
+  +dibujar()
+  +estaDestruido()
+  +marcarDestruido()
+}
+
+class AdministradorPuntos {
+  +aumentarPuntaje()
+  +mostrarPuntaje()
+}
+
+class EstadoJuego {
+  +cambiarEstado()
+  +obtenerEstado()
+}
+
+' ---------------------------
+' RELACIONES
+' ---------------------------
+
+JuegoPrincipal "1" *-- "1" Jugador : contiene
+JuegoPrincipal "1" *-- "1" Pelota : contiene
+JuegoPrincipal "1" *-- "10..*" Bloque : contiene
+JuegoPrincipal "1" *-- "1" AdministradorPuntos : gestiona
+JuegoPrincipal "1" *-- "1" EstadoJuego : controla
+
+Jugador "1" -- "1" Pelota : interactúa
+Pelota "1" -- "*" Bloque : destruye
+
+@enduml
